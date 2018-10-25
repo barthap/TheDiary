@@ -1,0 +1,13 @@
+{
+  "properties": [
+    {
+      "name": "security.username",
+      "type": "java.lang.String",
+      "description": "Default login username"
+    },
+    {
+      "name": "security.password",
+      "type": "java.lang.String",
+      "description": "Default login password"
+    }
+  ] }

@@ -4,6 +4,7 @@ import {IAlertState} from "../../reducers/alert.reducer";
 import {alertActions, IAlertAction} from "../../actions/alert.actions";
 import {Dispatch} from "redux";
 import { routerHistory } from '../../helpers/history';
+import {IAppState} from "../../reducers";
 
 type AlertProps = {
     alert: IAlertState;
@@ -37,7 +38,7 @@ class AlertBox extends React.Component<AlertProps>{
     }
 }
 
-function mapStateToProps(state: any) {
+function mapStateToProps(state: IAppState) {
     const { alert } = state;
     return {
         alert

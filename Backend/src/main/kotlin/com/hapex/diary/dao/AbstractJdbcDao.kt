@@ -27,7 +27,7 @@ abstract class AbstractJdbcDao<T : EntityBase, ID : Serializable>
             protected val daoHelper: DaoHelper
     ) : PagingAndSortingDao<T,ID> {
 
-    private val selectAllQuery = QueryBuilder.select(tableName).build()
+    private val selectAllQuery = QueryBuilder.select(viewName).build()
 
 
     override fun countAll(): Int {

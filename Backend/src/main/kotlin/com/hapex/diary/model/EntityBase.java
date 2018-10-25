@@ -19,7 +19,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Data
 public class EntityBase {
-    protected long id;
+    protected long id = 0;
     protected DateTime createdDateTime;
     protected DateTime updatedDateTime;
 

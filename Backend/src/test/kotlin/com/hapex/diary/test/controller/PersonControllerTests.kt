@@ -2,9 +2,12 @@ package com.hapex.diary.test.controller
 
 import com.hapex.diary.controller.PeopleController
 import com.hapex.diary.dao.PeopleDao
+import com.hapex.diary.dto.PersonDto
 import com.hapex.diary.model.Person
+import com.hapex.diary.service.PeopleService
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.given
+import com.nhaarman.mockito_kotlin.willReturn
 import org.hamcrest.Matchers.hasSize
 import org.joda.time.LocalDate
 import org.junit.Test
@@ -24,14 +27,14 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 class PersonControllerTests {
     @Autowired private lateinit var mockMvc: MockMvc
 
-    @MockBean private lateinit var dao: PeopleDao
+    @MockBean private lateinit var service: PeopleService
 
     @Test
     fun `get all people test`() {
         val page = PageImpl<Person>(listOf(
                 Person("Eustachy", "Desc", LocalDate.now())
         ))
-        given(dao.findAll(any<Pageable>())).willReturn(page)
+        given(service.findAll(any<Pageable>())).willReturn(page)
 
         mockMvc.perform(get("/people"))
                 .andExpect(status().isOk)
@@ -48,5 +51,10 @@ class PersonControllerTests {
     @Test
     fun `should return 404 when person not found`() {
         TODO("Test not implemented!")
+    }
+
+    @Test
+    fun `add person test`() {
+        TODO()
     }
 }
