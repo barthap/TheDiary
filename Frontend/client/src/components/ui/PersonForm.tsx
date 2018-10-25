@@ -1,8 +1,10 @@
 import * as React from 'react';
 import {Person} from "../../types";
-
+// @ts-ignore
+import RichTextEditor from 'react-rte';
 
 export interface PersonFormProps {
+    title: string
     data?: Person;
     onSave: (data: Person) => void;
     onCancel: () => void;
@@ -10,14 +12,14 @@ export interface PersonFormProps {
 
 type FormState = {
     fullName: string;
-    description: string;
-    birthDate: Date;
+    description: any;
+    rawBirthDate: string;
 }
 
 const initialState: FormState = {
     fullName: '',
-    description: '',
-    birthDate: new Date(2000, 1, 1)
+    description: RichTextEditor.createEmptyValue(),
+    rawBirthDate: new Date(2000, 1, 1).toISOString()
 };
 
 export class PersonForm extends React.Component<PersonFormProps, FormState> {
@@ -28,49 +30,49 @@ export class PersonForm extends React.Component<PersonFormProps, FormState> {
         const {data} = props;
         this.state = data ? {
             fullName: data.fullName,
-            birthDate: new Date(data.birthDate),
-            description: data.description
+            rawBirthDate: new Date(data.birthDate + 24*3600*1000).toISOString(),
+            description: RichTextEditor.createValueFromString(data.description, 'markdown')
         } : initialState;
 
         this.handleSave = this.handleSave.bind(this);
         this.handleCancel = this.handleCancel.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.handleEditorChange = this.handleEditorChange.bind(this);
     }
 
     public componentWillReceiveProps(newProps: PersonFormProps) {
         const {data} = newProps;
         this.setState( data ? {
             fullName: data.fullName,
-            birthDate: new Date(data.birthDate),
-            description: data.description
+            rawBirthDate: new Date(data.birthDate + new Date().getTimezoneOffset()).toISOString(),
+            description: RichTextEditor.createValueFromString(data.description, 'markdown')
         } : initialState);
     }
 
     public render() {
-        const {fullName, description, birthDate} = this.state;
+        const {fullName, description, rawBirthDate} = this.state;
         return (
             <div>
                 <form>
                     <fieldset>
-                        <legend>Person Form</legend>
+                        <legend>{this.props.title}</legend>
                         <div className="form-group">
                             <label htmlFor="fullName" className="control-label">Full name</label>
                             <input value={fullName} onChange={this.handleChange}
                                 type="text" required name="fullName" className="form-control"/>
                         </div>
                         <div className="form-group">
-                            <label htmlFor="description"
+                            <label
                                    className="control-label">Description</label>
-                            <textarea value={description} onChange={this.handleChange}
-                                name="description" className="form-control"/>
+                            <RichTextEditor value={description} onChange={this.handleEditorChange}/>
                         </div>
                         <div className="form-group">
                             <label htmlFor="birthDate" className="control-label">Birth date</label>
-                            <input value={birthDate.toISOString().substring(0, 10)} onChange={this.handleChange}
+                            <input value={rawBirthDate.substring(0, 10)} onChange={this.handleChange}
                                 type="date" name="birthDate" className="form-control"/>
                         </div>
                     </fieldset>
-                    <button className="btn btn-primary btn-lg" type="submit" style={{margin: 10}}
+                    <button className="btn btn-primary btn-lg m" type="submit"
                             onClick={this.handleSave}>Save
                     </button>
                     <button className="btn btn-default btn-lg" type="button"
@@ -86,24 +88,26 @@ export class PersonForm extends React.Component<PersonFormProps, FormState> {
             case 'fullName':
                 this.setState({fullName: value});
                 break;
-            case 'description':
-                this.setState({description: value});
-                break;
             case 'birthDate':
-                this.setState({birthDate: new Date(value)});
+                this.setState({rawBirthDate: value});
                 break;
         }
+    }
+
+    private handleEditorChange(value: any) {
+        this.setState({description: value});
     }
 
     private handleSave(event: React.MouseEvent<HTMLButtonElement>) {
         event.preventDefault();
 
-        const {fullName, description, birthDate} = this.state;
+        const {fullName, description, rawBirthDate} = this.state;
+        const date = new Date(rawBirthDate);
         const saved: Person = {
             ...this.props.data,
             fullName,
-            description,
-            birthDate: birthDate.getMilliseconds()
+            description: description.toString('markdown'),
+            birthDate: date.getTime() + date.getTimezoneOffset()
         };
 
         this.props.onSave(saved);

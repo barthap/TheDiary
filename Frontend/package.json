@@ -53,6 +53,7 @@
     "redux": "^4.0.0"
   },
   "devDependencies": {
+    "@types/draft-js": "^0.10.25",
     "awesome-typescript-loader": "^5.2.1",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.4",

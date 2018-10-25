@@ -69,7 +69,7 @@ public class PeopleDaoImpl extends AbstractJdbcDao<Person, Long> implements Peop
         MapSqlParameterSource params = new MapSqlParameterSource()
                 .addValue("id", person.getId())
                 .addValue("name", person.getFullName())
-                .addValue("birthDate", Utils.dateTimeToDbStr(person.getBirthDate().toDateTimeAtStartOfDay(), true))
+                .addValue("birthDate", Utils.dateTimeToDbStr(person.getBirthDate().toDateTimeAtCurrentTime(), true))
                 .addValue("description", person.getDescription());
 
         getNamedJdbc().update(sql, params);

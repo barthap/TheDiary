@@ -6,10 +6,15 @@ export const api = axios.create();
 export function setApiAuthToken(token: string) {
     let header = null;
 
-    if (token !== null)
-        header = 'Basic ' + token;
+    if (token == null) return;
 
-    api.defaults.headers.common['Authorization'] = header;
+    header = 'Basic ' + token;
+    //api.defaults.headers.common['Authorization'] = header;
+    const credentials = atob(token).split(':');
+    const username = credentials[0];
+    const password = credentials[1];
+
+    api.defaults.auth = { username, password};
 }
 
 export function checkForSavedUser(): User {

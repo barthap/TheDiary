@@ -1,17 +1,17 @@
 import {Person} from "../types";
 import {Reducer} from "redux";
-import {AddPersonStatus, FetchPeopleStatus, SaveFetched} from "../actions/person.actions";
 import {personConstants} from "../consts/person.constants";
-import * as util from '../helpers/utils';
 
 export interface IPeopleState {
     items: Person[];
     fetching: boolean;
+    isCrudPending: boolean;
 }
 
 const initialState: IPeopleState = {
     items: [],
-    fetching: false
+    fetching: false,
+    isCrudPending: false
 };
 
 const peopleReducer: Reducer<IPeopleState> = (state: IPeopleState = initialState, action) => {
@@ -22,8 +22,27 @@ const peopleReducer: Reducer<IPeopleState> = (state: IPeopleState = initialState
             return {...state, fetching: false};
         case personConstants.FETCH_PEOPLE_SUCCESS:
             return {...state, fetching: false, items: action.payload};
+        case personConstants.ADD_PERSON_SUCCESS:
         case personConstants.SAVE_FETCHED:
-            return {...state, items: util.appendAndCopy(state.items, action.payload)};
+            return {...state, items: state.items.concat(action.payload), isCrudPending: false};
+        case personConstants.UPDATE_PERSON_SUCCESS:
+            return {...state, isCrudPending: false,
+                items: state.items.filter(p=>p.id !== action.payload.id)
+                    .concat(action.payload)
+            };
+        case personConstants.DELETE_PERSON_SUCCESS:
+            return {...state, isCrudPending: false,
+                items: state.items.filter(p=>p.id !== action.payload)
+            };
+            //TODO: Add UPDATE, AND DELETE HANDLING
+        case personConstants.UPDATE_PERSON_PENDING:
+        case personConstants.ADD_PERSON_PENDING:
+        case personConstants.DELETE_PERSON_PENDING:
+            return {...state, isCrudPending: true};
+        case personConstants.ADD_PERSON_FAILURE:
+        case personConstants.UPDATE_PERSON_FAILURE:
+        case personConstants.DELETE_PERSON_FAILURE:
+            return {...state, isCrudPending: false};
         default:
             return state;
     }

@@ -6,7 +6,7 @@ import { AppContainer } from 'react-hot-loader';
 import reducers from './reducers/index';
 import App from './App';
 import { routerHistory } from './helpers/history';
-import { createStore, applyMiddleware } from 'redux';
+import {createStore, applyMiddleware, compose} from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import {rootSaga} from "./saga";
 
@@ -16,11 +16,15 @@ Here we are getting the initial state injected by the server. See routes/index.j
 const initialState = window.__INITIAL_STATE__; // eslint-disable-line
 
 
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(
     reducers,
     initialState,
-    applyMiddleware(sagaMiddleware));
+    composeEnhancers(
+      applyMiddleware(sagaMiddleware)
+    )
+);
 
 sagaMiddleware.run(rootSaga);
 

@@ -35,7 +35,7 @@ export class FilterablePersonList extends React.Component<FilterablePersonListPr
 
     public render() {
         const {sortedPeople, filterText} = this.state;
-        
+
         return (
             <div>
                 <div className="input-group">
@@ -43,12 +43,31 @@ export class FilterablePersonList extends React.Component<FilterablePersonListPr
                     <input type="text" placeholder="Filter..." className="form-control"
                         value={filterText} onChange={this.handleFilterChange}/>
                 </div>
-                {sortedPeople.map(g => <div key={g.group}>
-                    <h5>{g.group}</h5>
-                    <PersonList people={g.children}/>
-                </div>)}
+                {this.renderColumns(sortedPeople)}
             </div>
         )
+    }
+
+    private renderColumns(items: PersonGroup[]) {
+        const secondColumnStart = Math.floor(items.length / 2);
+
+        return (
+            <div className="row">
+                <div className="col-md-6">
+                    {items.slice(0,secondColumnStart).map(item => this.renderGroup(item))}
+                </div>
+                <div className="col-md-6">
+                    {items.slice(secondColumnStart).map(item => this.renderGroup(item))}
+                </div>
+            </div>
+        );
+    }
+
+    private renderGroup(g: PersonGroup) {
+        return <div key={g.group}>
+            <h5>{g.group}</h5>
+            <PersonList people={g.children}/>
+        </div>;
     }
 
     private handleFilterChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -60,9 +79,11 @@ export class FilterablePersonList extends React.Component<FilterablePersonListPr
     private arrangeAndFilter(rawData: Person[], filterText: string) {
         const trimmedFilterText = filterText.trim().toLowerCase();
         let filtered = rawData;
-        if(filterText && filterText.length !== 0)
+        if(filterText && filterText.length > 0)
             filtered = rawData.filter(p => p.fullName.toLowerCase().includes(trimmedFilterText));
-        this.setState({sortedPeople: this.arrangeGroups(filtered)});
+        this.setState({sortedPeople:
+                this.arrangeGroups(filtered)
+        });
     }
 
     private arrangeGroups(rawData: Person[]): PersonGroup[] {
@@ -75,6 +96,12 @@ export class FilterablePersonList extends React.Component<FilterablePersonListPr
             return r;
         }, {});
 
-        return Object.keys(data).map(k=> data[k]);
+        //sort em
+        return Object.keys(data).map(k=> data[k])
+            .map((g: PersonGroup) => ({...g,
+                children: g.children.sort((a, b) =>
+                    a.fullName > b.fullName ? 1 : (a.fullName < b.fullName ? -1 : 0))
+            })).sort((a, b) => a.group > b.group ? 1 : a.group < b.group ? -1 : 0);
     }
+
 }

@@ -31,9 +31,9 @@ export function updatePerson(id: number, person: Person): Promise<Person> {
 }
 
 export function deletePerson(id: number): Promise<any> {
-    return api.delete(API_URL + '/people' + id)
+    return api.delete(API_URL + '/people/' + id)
         .then(res => {
             if(res.status === 204) return Promise.resolve();
-            else Promise.reject();
+            else Promise.reject(res);
         });
 }

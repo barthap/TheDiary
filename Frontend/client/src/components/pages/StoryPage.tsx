@@ -4,6 +4,7 @@ import {IAppState} from "../../reducers";
 import {Dispatch} from "redux";
 import {IStoryState} from "../../reducers/story.reducer";
 import {IFetchStoriesAction, storyActions} from "../../actions/story.actions";
+import {dictionaryValues} from "../../helpers/utils";
 
 type StoryPageProps = {
     storyState: IStoryState;
@@ -20,12 +21,14 @@ class StoryPage extends React.Component<StoryPageProps> {
     public render() {
         const { items, fetching } = this.props.storyState;
         //TODO: items are Dictionary, not array
+        const stories = dictionaryValues(items);
+
         return (
             <main role="main">
                 <h1> Stories</h1>
 
                 {fetching ? <p>Loading...</p> :
-                items.map(i =>
+                stories.map(i =>
                     <p key={i.id}><b>{i.header}</b><br/>{i.content}</p>
                 )}
 

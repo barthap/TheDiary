@@ -5,6 +5,9 @@ import {Dispatch} from "redux";
 import {FetchPeopleAction, personActions} from "../../actions/person.actions";
 import {connect} from "react-redux";
 import {FilterablePersonList} from "../ui/FilterablePersonList";
+import {Link} from "react-router-dom";
+import {Toolbar} from "../ui/Toolbar";
+import {CreateButton} from "../ui/CreateButton";
 
 type PeoplePageProps = {
     peopleState: IPeopleState;
@@ -20,16 +23,17 @@ class PeoplePage extends React.Component<PeoplePageProps>{
     }
 
     public render() {
-        const { items, fetching } = this.props.peopleState;
+        const { items, fetching, isCrudPending } = this.props.peopleState;
         return (
             <main role="main">
                <h1>People</h1>
-                <div role="group" className="btn-group">
-                    <button className="btn btn-primary" type="button">
-                        <span className="glyphicon glyphicon-plus"/> Add
-                    </button>
-                </div>
-                {fetching ? <p>Loading...</p> :
+                <Toolbar className="m-b">
+                    <Link to="/people/add">
+                        <CreateButton />
+                    </Link>
+                </Toolbar>
+                {isCrudPending && <h3>Updating...</h3>}
+                {fetching ? <h3>Loading...</h3> :
                     <FilterablePersonList people={items}/>
                 }
             </main>

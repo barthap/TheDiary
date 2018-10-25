@@ -13,7 +13,7 @@ export interface IStoryState {
 }
 
 const initialState: IStoryState = {
-    items: [],
+    items: {},
     fetching: false
 };
 

@@ -1,5 +1,6 @@
 package com.hapex.diary.config.security;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
@@ -13,12 +14,15 @@ import java.io.PrintWriter;
 @Component
 public class MyBasicAuthenticationEntryPoint extends BasicAuthenticationEntryPoint {
 
+    @Value("${client.origin:*}")
+    private String clientOrigin;
+
     @Override
     public void commence
             (HttpServletRequest request, HttpServletResponse response, AuthenticationException authEx)
             throws IOException, ServletException {
         response.addHeader("WWW-Authenticate", "Basic realm=" + getRealmName() + "");
-        response.addHeader("Access-Control-Allow-Origin", "http://localhost:8080");
+        response.addHeader("Access-Control-Allow-Origin", clientOrigin);
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         PrintWriter writer = response.getWriter();
         writer.println("HTTP Status 401 - " + authEx.getMessage());
@@ -26,7 +30,7 @@ public class MyBasicAuthenticationEntryPoint extends BasicAuthenticationEntryPoi
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        setRealmName("Realm");
+        setRealmName("DIARY");
         super.afterPropertiesSet();
     }
 }

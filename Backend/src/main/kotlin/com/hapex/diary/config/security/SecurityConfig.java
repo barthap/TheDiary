@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -32,6 +33,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Value("${security.password}")
     private String password;
 
+    @Value("${client.origin:*}")
+    private String clientOrigin;
+
     @Autowired
     public void configueGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
@@ -41,16 +45,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers(HttpMethod.OPTIONS, "/**");
+    }
+
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                .mvcMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                //.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                //.mvcMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .httpBasic().authenticationEntryPoint(new MyBasicAuthenticationEntryPoint());
+                .csrf().disable().logout().disable()
+                .httpBasic()
+                    .authenticationEntryPoint(new MyBasicAuthenticationEntryPoint())
+                    .realmName("DIARY");
     }
 
 
@@ -61,8 +73,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:8080")
-                        .exposedHeaders("Access-Control-Allow-Origin");
+                        .allowedOrigins(clientOrigin)
+                        .allowedMethods("GET","POST","PUT","DELETE","OPTIONS");
             }
         };
     }

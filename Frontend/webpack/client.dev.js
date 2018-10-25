@@ -8,7 +8,7 @@ module.exports = {
     devtool: 'inline-source-map',
     entry: [
             'react-hot-loader/patch',
-        'webpack-dev-server/client?http://localhost:8080',
+        'webpack-dev-server/client?http://localhost:3000',
         'webpack/hot/only-dev-server',
         'jquery',
         'bootstrap',
@@ -27,7 +27,8 @@ module.exports = {
         hot: true,
         publicPath: '/',
         historyApiFallback: true,
-        stats: "minimal"
+        stats: "minimal",
+        port: 3000
     },
     resolve: {
         extensions: ['.js', '.jsx', '.ts', '.tsx', '.json', '*']
@@ -50,7 +51,10 @@ module.exports = {
             {
                 enforce: "pre",
                 test: /\.js$/,
-                loader: "source-map-loader"
+                loader: "source-map-loader",
+                exclude: [
+                    /node_modules\/react-rte/
+                ]
             },
             {
                 test: /\.(css|scss)$/,

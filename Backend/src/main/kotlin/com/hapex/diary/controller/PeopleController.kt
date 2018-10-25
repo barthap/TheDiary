@@ -26,7 +26,7 @@ class PeopleController (private val peopleService: PeopleService) {
     @ResponseStatus(HttpStatus.CREATED)
     fun addPerson(@RequestBody dto: PersonDto) = peopleService.addPerson(dto)
 
-    @PutMapping("/{id")
+    @PutMapping("/{id}")
     fun updatePerson(@PathVariable id: Long, @RequestBody dto: PersonDto) = peopleService.updatePerson(id, dto)
 
     @DeleteMapping("/{id}")
