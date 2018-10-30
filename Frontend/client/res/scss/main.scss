@@ -15,10 +15,36 @@ html,body,.container-fluid {
   margin: 15px;
 }
 
+.beige-bg {
+  background-color: beige;
+}
+
+.reference-dropdown {
+  display: inline-block;
+  top: auto;
+  left: auto;
+}
+
+.story-main {
+
+}
+.story-toolbar {
+
+}
+
 .float-rigt {
   float: right;
   margin-right: -15px;
 }
 
+.column-left {
+  margin-left: unset;
+}
+
+.no-dots {
+  list-style: none;
+}
+
 @import "site";
 @import "spacing";
+@import "gallery";

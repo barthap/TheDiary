@@ -3,7 +3,7 @@ import {authConstants} from "../consts/auth.constants";
 import {IAuthAction} from "../actions/auth.actions";
 import {checkForSavedUser} from "../helpers/api";
 
-enum Status {
+export enum LoginStatus {
     NOTHING,
     PENDING,
     SUCCESS,
@@ -13,7 +13,7 @@ enum Status {
 export interface IAuthState {
     user?: User,
     isLoggedIn: boolean;
-    status: Status;
+    status: LoginStatus;
 }
 
 function getInitialState(): IAuthState {
@@ -22,14 +22,14 @@ function getInitialState(): IAuthState {
         return {
             user: user,
             isLoggedIn: true,
-            status: Status.NOTHING
+            status: LoginStatus.NOTHING
         }
     }
 
     return {
         user: null,
         isLoggedIn: false,
-        status: Status.NOTHING
+        status: LoginStatus.NOTHING
     }
 }
 
@@ -37,25 +37,25 @@ function getInitialState(): IAuthState {
 export default function authReducer(state: IAuthState = getInitialState(), action: IAuthAction): IAuthState {
     switch (action.type) {
         case authConstants.LOGIN_PENDING:
-            return {...state, status: Status.PENDING};
+            return {...state, status: LoginStatus.PENDING};
         case authConstants.LOGIN_SUCCESS:
             return {
                 ...state,
-                status: Status.SUCCESS,
+                status: LoginStatus.SUCCESS,
                 isLoggedIn: true,
                 user: action.payload
             };
         case authConstants.LOGIN_FAILURE:
             return {
                 ...state,
-                status: Status.FAIL,
+                status: LoginStatus.FAIL,
                 isLoggedIn: false,
                 user: null
             };
         case authConstants.LOGOUT:
             return {
                 ...state,
-                status: Status.NOTHING,
+                status: LoginStatus.NOTHING,
                 isLoggedIn: false,
                 user: null
             };

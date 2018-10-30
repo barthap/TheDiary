@@ -1,7 +1,8 @@
-import {PageConfig, SortOrder} from "../types";
+import {IPageConfig} from "./pagination";
+import {SortOrder} from "./pagination";
 
 
-export function createPageQueryString (pageable: PageConfig): string {
+export function createPageQueryString (pageable: IPageConfig): string {
 
     if(pageable == null) return '';
     const { page, size, sort } = pageable;

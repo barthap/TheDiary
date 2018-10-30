@@ -1,20 +1,21 @@
 import { api } from "../helpers/api";
-import {PageConfig, Person} from "../types";
+import {IPerson} from "../helpers/types";
 import {API_URL} from "../consts";
 import {createPageQueryString} from "../helpers/ResourceFilters";
+import {IPageConfig} from "../helpers/pagination";
 
-export function fetchPeople(pageable: PageConfig): Promise<Person[]> {
+export function fetchPeople(pageable: IPageConfig): Promise<IPerson[]> {
     return api.get(API_URL + '/people' + createPageQueryString(pageable))
         .then(res => res.data)
         .catch(err => { throw err; });
 }
 
-export function fetchSinglePerson(id: number): Promise<Person> {
+export function fetchSinglePerson(id: number): Promise<IPerson> {
         return api.get(API_URL + '/people/' + id)
             .then(res => res.data);
 }
 
-export function addPerson(person: Person): Promise<Person> {
+export function addPerson(person: IPerson): Promise<IPerson> {
     /*const dto = {
         fullName: person.fullName,
         birthDate: person.birthDate,
@@ -25,7 +26,7 @@ export function addPerson(person: Person): Promise<Person> {
         .then(res => res.data);
 }
 
-export function updatePerson(id: number, person: Person): Promise<Person> {
+export function updatePerson(id: number, person: IPerson): Promise<IPerson> {
     return api.put(API_URL + /people/ + id, person)
         .then(res => res.data);
 }

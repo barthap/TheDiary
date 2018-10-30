@@ -18,6 +18,11 @@ export default function alert(state: IAlertState = {}, action: IAlertAction): IA
                 type: 'alert-danger',
                 message: action.message
             };
+        case alertConstants.INFO:
+            return {
+                type: 'alert-info',
+                message: action.message
+            };
         case alertConstants.CLEAR:
             return {};
         default:

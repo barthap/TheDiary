@@ -5,7 +5,8 @@ export const personConstants = {
     FETCH_PEOPLE_SUCCESS: 'FETCH_PEOPLE_SUCCESS',
     FETCH_PEOPLE_FAILURE: 'FETCH_PEOPLE_FAILURE',
 
-    SAVE_FETCHED: 'SAVE_FETCHED',
+    //this is an alias, does the same
+    SAVE_FETCHED: 'ADD_PERSON_SUCCESS',
 
     ADD_PERSON: 'ADD_PERSON',
     ADD_PERSON_PENDING: 'ADD_PERSON_PENDING',
@@ -36,7 +37,6 @@ export type ADD_PERSON = typeof personConstants.ADD_PERSON;
 export type ADD_PERSON_PENDING = typeof personConstants.ADD_PERSON_PENDING;
 export type ADD_PERSON_SUCCESS = typeof personConstants.ADD_PERSON_SUCCESS;
 export type ADD_PERSON_FAILURE = typeof personConstants.ADD_PERSON_FAILURE;
-
 export type ADD_PERSON_STATUS = ADD_PERSON_PENDING | ADD_PERSON_SUCCESS | ADD_PERSON_FAILURE;
 
 export type UPDATE_PERSON = typeof personConstants.UPDATE_PERSON;

@@ -7,6 +7,9 @@ import org.mockito.junit.MockitoJUnitRunner
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort
 
+/**
+ * Tests written only to test some single-method PoCs
+ */
 @RunWith(MockitoJUnitRunner::class)
 class CustomTests {
 

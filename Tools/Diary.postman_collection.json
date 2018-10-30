@@ -1,0 +1,386 @@
+{
+	"info": {
+		"_postman_id": "b98cb5c1-64d0-4dd3-a9b5-897f507406df",
+		"name": "Diary",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Photos",
+			"item": [
+				{
+					"name": "Get photo list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/photos",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"photos"
+							]
+						},
+						"description": "Gets list of photo details"
+					},
+					"response": []
+				},
+				{
+					"name": "Get photo details",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "d89a0b99-f3d3-40ac-bbde-69d5360be9d2",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/photos/31/details",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"photos",
+								"31",
+								"details"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Fetch photo",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/photos/31",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"photos",
+								"31"
+							]
+						},
+						"description": "Gets image"
+					},
+					"response": []
+				},
+				{
+					"name": "Upload photo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": ""
+								},
+								{
+									"key": "title",
+									"value": "Kawasaki Ninja 300",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/photos",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"photos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update detail",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\": \"Magda 1\",\n\t\"description\": \"Zdj chyba z _jej_ studniowki\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/photos/30/details",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"photos",
+								"30",
+								"details"
+							]
+						},
+						"description": "Update photo details"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete photo",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/photos/32",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"photos",
+								"32"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "People",
+			"item": [
+				{
+					"name": "Get people paginated",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/people?page=0&size=50",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"people"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "50"
+								}
+							]
+						},
+						"description": "Gets all ppl without pagination"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Story",
+			"item": [
+				{
+					"name": "Get all stories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/story",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"story"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New story",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": " {\n\n        \"happenedDate\": 1542900000000,\n        \"header\": \"Another Story\",\n        \"content\": \"### Lorem ipsum\\n\\nSome story content _for example_.\\n#####Header\\nLorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor. Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor.\\nLorem ipsum dolor sit amet katapulta elit\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/story",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"story"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update story",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": " {\n\n        \"happenedDate\": 1540100000000,\n        \"header\": \"Another Story\",\n        \"content\": \"### Lorem ipsum\\n\\nSome story content _for example_.\\n#####Header\\nLorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor. Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor.\\nLorem ipsum dolor sit amet katapulta elit\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/story/41",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"story",
+								"41"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "References",
+			"item": [
+				{
+					"name": "Create reference",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/references/41-20",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"references",
+								"41-20"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove reference",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "admin",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "admin",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "69ba2672-6dd5-40fd-8b6c-7c29ad86b93b",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "2002b50b-c5ed-441e-9642-59002f46e188",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "b582ca2e-e1a1-48f7-b695-5a007b2d1efc",
+			"key": "base_url",
+			"value": "http://localhost:8081",
+			"type": "string"
+		}
+	]
+}

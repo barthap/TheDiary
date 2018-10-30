@@ -1,8 +1,7 @@
 package com.hapex.diary.controller
 
-import com.hapex.diary.dto.PersonDto
+import com.hapex.diary.data.dto.PersonDto
 import com.hapex.diary.service.PeopleService
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*

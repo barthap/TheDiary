@@ -53,7 +53,8 @@ module.exports = {
                 test: /\.js$/,
                 loader: "source-map-loader",
                 exclude: [
-                    /node_modules\/react-rte/
+                    /node_modules\/react-rte/,
+                    /node_modules\\react-rte/
                 ]
             },
             {

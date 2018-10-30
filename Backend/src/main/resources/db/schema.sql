@@ -157,7 +157,7 @@ drop view if exists ReferenceView;
 create view ReferenceView as
   select
     I.ItemId      as Id,
-    IT.Name       as Type,
+    IT.TypeCode   as Type,
     S.StoryDateTime,
     S.Header      as StoryHeader,
     F.Title       as FileTitle,

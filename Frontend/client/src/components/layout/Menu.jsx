@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from '../../../res/images/logo.png';
 import {Link} from "react-router-dom";
 
 const Menu = (props) => (
@@ -13,7 +12,7 @@ const Menu = (props) => (
                         <span className='icon-bar'/>
                         <span className='icon-bar'/>
                     </button>
-                    <Link className='navbar-brand' to={ '/' }>DiaryServer</Link>
+                    <Link className='navbar-brand' to={ '/' }>TheDiary</Link>
                 </div>
                 <div className='clearfix'/>
                 <div className='navbar-collapse collapse'>

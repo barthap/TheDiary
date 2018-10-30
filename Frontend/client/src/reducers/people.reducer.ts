@@ -1,9 +1,9 @@
-import {Person} from "../types";
+import {IPerson} from "../helpers/types";
 import {Reducer} from "redux";
 import {personConstants} from "../consts/person.constants";
 
 export interface IPeopleState {
-    items: Person[];
+    items: IPerson[];
     fetching: boolean;
     isCrudPending: boolean;
 }
@@ -23,7 +23,6 @@ const peopleReducer: Reducer<IPeopleState> = (state: IPeopleState = initialState
         case personConstants.FETCH_PEOPLE_SUCCESS:
             return {...state, fetching: false, items: action.payload};
         case personConstants.ADD_PERSON_SUCCESS:
-        case personConstants.SAVE_FETCHED:
             return {...state, items: state.items.concat(action.payload), isCrudPending: false};
         case personConstants.UPDATE_PERSON_SUCCESS:
             return {...state, isCrudPending: false,
@@ -34,7 +33,6 @@ const peopleReducer: Reducer<IPeopleState> = (state: IPeopleState = initialState
             return {...state, isCrudPending: false,
                 items: state.items.filter(p=>p.id !== action.payload)
             };
-            //TODO: Add UPDATE, AND DELETE HANDLING
         case personConstants.UPDATE_PERSON_PENDING:
         case personConstants.ADD_PERSON_PENDING:
         case personConstants.DELETE_PERSON_PENDING:

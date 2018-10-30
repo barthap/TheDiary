@@ -9,7 +9,6 @@ import org.springframework.http.server.ServerHttpResponse
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice
 import org.springframework.web.bind.annotation.RestControllerAdvice
 
-//TODO: Do something with that <Any>
 //@see https://stackoverflow.com/questions/44375435/spring-auto-add-x-total-count-header
 
 @RestControllerAdvice

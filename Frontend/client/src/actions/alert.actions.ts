@@ -9,6 +9,7 @@ export interface IAlertAction {
 export const alertActions = {
     success,
     error,
+    info,
     clear
 };
 
@@ -18,6 +19,10 @@ function success(message: string): IAlertAction {
 
 function error(message: string): IAlertAction {
     return { type: alertConstants.ERROR, message };
+}
+
+function info(message: string): IAlertAction {
+    return { type: alertConstants.INFO, message };
 }
 
 function clear(): IAlertAction {

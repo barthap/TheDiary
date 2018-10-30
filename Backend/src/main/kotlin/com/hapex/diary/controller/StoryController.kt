@@ -1,6 +1,6 @@
 package com.hapex.diary.controller
 
-import com.hapex.diary.dto.StoryDto
+import com.hapex.diary.data.dto.StoryDto
 import com.hapex.diary.service.StoryService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Pageable

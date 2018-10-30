@@ -1,19 +1,18 @@
 import * as React from 'react';
 import * as service from '../../service/people.service';
-import {Person} from "../../types";
-import {PersonForm} from "../ui/PersonForm";
+import {IPerson} from "../../helpers/types";
+import {PersonForm} from "../ui/Person/PersonForm";
 import {RouteComponentProps} from "react-router";
 import {Dispatch} from "redux";
 import {alertActions, IAlertAction} from "../../actions/alert.actions";
 import {connect} from "react-redux";
 import {IAppState} from "../../reducers";
-import {PersonView} from '../ui/PersonView';
+import {PersonView} from '../ui/Person/PersonView';
 import {personActions} from "../../actions/person.actions";
 
 
 type ReduxInjectedProps = {
-    showErrorAlert: (message: string) => void;
-    savePerson: (payload: Person) => void;
+    savePerson: (payload: IPerson) => void;
 }
 type PersonPageProps = RouteComponentProps<{id: string}> & ReduxInjectedProps
 
@@ -38,7 +37,7 @@ class AddPersonPage extends React.Component<PersonPageProps>{
         );
     }
 
-    private handleSave(formResult: Person) {
+    private handleSave(formResult: IPerson) {
         this.props.history.goBack();
         this.props.savePerson(formResult)
     }
@@ -47,7 +46,7 @@ class AddPersonPage extends React.Component<PersonPageProps>{
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<IAlertAction>) => ({
-    savePerson: (payload: Person) => dispatch(personActions.addPerson(payload))
+    savePerson: (payload: IPerson) => dispatch(personActions.addPerson(payload))
 });
 
 export default connect(null, mapDispatchToProps)(AddPersonPage);

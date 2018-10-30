@@ -24,6 +24,17 @@ export function dictionaryValues(data: any) {
     return Object.keys(data).map(k=> data[k]);
 }
 
+export function displayDate(timestamp: number): string {
+    return new Date(timestamp).toLocaleDateString();
+}
+export function displayDateTime(timestamp: number): string {
+    return new Date(timestamp).toLocaleString();
+}
+
+export function isUserLoggedIn(): boolean {
+    return JSON.parse(localStorage.getItem('user')) != null;
+}
+
 /**
  * Fake Delay
  * @param ms time to sleep in ms

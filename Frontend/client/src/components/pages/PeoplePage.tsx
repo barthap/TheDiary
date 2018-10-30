@@ -4,10 +4,11 @@ import {IAppState} from "../../reducers";
 import {Dispatch} from "redux";
 import {FetchPeopleAction, personActions} from "../../actions/person.actions";
 import {connect} from "react-redux";
-import {FilterablePersonList} from "../ui/FilterablePersonList";
+import {FilterablePersonList} from "../ui/Person/FilterablePersonList";
 import {Link} from "react-router-dom";
 import {Toolbar} from "../ui/Toolbar";
-import {CreateButton} from "../ui/CreateButton";
+import {CreateButton} from "../ui/Button/CreateButton";
+import {PageRequest} from "../../helpers/pagination";
 
 type PeoplePageProps = {
     peopleState: IPeopleState;
@@ -18,7 +19,7 @@ class PeoplePage extends React.Component<PeoplePageProps>{
     constructor(props: PeoplePageProps) {
         super(props);
 
-        if(this.props.peopleState.items.length === 0)
+        if(props.peopleState.items.length === 0)
             props.fetchPeople();
     }
 
@@ -43,7 +44,7 @@ class PeoplePage extends React.Component<PeoplePageProps>{
 
 const mapStateToProps = (state: IAppState) => ({ peopleState: state.people });
 const mapDispatchToProps = (dispatch: Dispatch<FetchPeopleAction>) => ({
-    fetchPeople: () => dispatch(personActions.fetchPeople())
+    fetchPeople: () => dispatch(personActions.fetchPeople(new PageRequest()))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PeoplePage);

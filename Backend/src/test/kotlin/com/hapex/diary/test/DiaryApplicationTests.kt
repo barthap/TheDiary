@@ -9,7 +9,7 @@ import org.springframework.test.context.junit4.SpringRunner
 @SpringBootTest
 class DiaryApplicationTests {
 
-    @Test
+    @Test   //empty test checks if Spring Boot context is loaded properly
     fun contextLoads() {
     }
 

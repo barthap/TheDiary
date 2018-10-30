@@ -24,3 +24,9 @@
 /dist/
 /nbdist/
 /.nb-gradle/
+
+
+### Project specific ###
+diary_private.db
+upload/tmpFiles/*
+!upload/tmpFiles/example-photo-*.jpg

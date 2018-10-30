@@ -5,3 +5,4 @@ export const Toolbar: React.SFC<{className?: string}> = (props) => (
         {props.children}
     </div>
 );
+Toolbar.displayName = "Toolbar";

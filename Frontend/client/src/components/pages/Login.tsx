@@ -1,7 +1,7 @@
 import * as React from "react";
 import '../../../res/scss/Login-Form-Dark.css';
 import {connect} from "react-redux";
-import {IAuthState} from "../../reducers/auth.reducer";
+import {IAuthState, LoginStatus} from "../../reducers/auth.reducer";
 import {Dispatch} from "redux";
 import {authActions, IAuthAction} from "../../actions/auth.actions";
 import {IAppState} from "../../reducers";
@@ -78,7 +78,9 @@ class LoginPage extends React.Component<ILoginPageProps, ILoginPageState> {
                             <button className="btn btn-primary btn-block"
                                 onClick={this.handleLogin}>Log In</button>
                         </div>
-                        <a href="#" className="forgot">Forgot your email or password?</a>
+                        {this.props.state.status === LoginStatus.FAIL &&
+                        <p className="well alert-danger">Failed to login! Try again</p>
+                        }
                     </form>
                 </div>
 
