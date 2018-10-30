@@ -2,10 +2,9 @@ package com.hapex.diary.data.dao.base
 
 import com.hapex.diary.data.model.EntityBase
 import com.hapex.diary.data.model.EntityType
-import com.hapex.diary.data.references.ReferenceDao
+import com.hapex.diary.data.dao.reference.ReferenceDao
 import com.hapex.diary.util.QueryBuilder
 import com.hapex.diary.util.exception.sql.NoRecordAffectedException
-import lombok.extern.apachecommons.CommonsLog
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.Pageable

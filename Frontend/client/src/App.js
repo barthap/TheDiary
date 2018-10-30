@@ -9,7 +9,7 @@ import Error404 from "./components/pages/Error404";
 import Story from './components/pages/StoryPage';
 import People from './components/pages/PeoplePage';
 import {Switch} from "react-router";
-import AlertBox from './components/ui/AlertBox';
+import AlertBox from './components/ui/Containers/AlertBox';
 import {PrivateRoute} from "./components/util/PrivateRoute";
 import PersonPage from "./components/pages/PersonPage";
 import AddPersonPage from "./components/pages/AddPersonPage";
