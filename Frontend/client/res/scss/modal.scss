@@ -1,0 +1,34 @@
+.modal {    //this is the background
+  position: fixed;
+  top: 0;
+  left: 0;
+  width:100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+//background helper to reduce width
+.modal-main {
+  width: 90%;
+  height: auto;
+  margin: 0 auto;
+}
+
+//dialog
+.modal-dialog{
+  overflow-y: initial !important
+}
+
+//only the children part
+.modal-body{
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.display-block {
+  display: block;
+}
+
+.display-none {
+  display: none;
+}

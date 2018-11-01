@@ -1,0 +1,28 @@
+{
+  "properties": [
+    {
+      "name": "security.username",
+      "type": "java.lang.String",
+      "description": "Default login username"
+    },
+    {
+      "name": "security.password",
+      "type": "java.lang.String",
+      "description": "Default login password"
+    },
+    {
+      "name": "client.origin",
+      "type": "java.lang.String",
+      "description": "CORS Allowed origins - usually client app URL, * for all"
+    },
+    {
+      "name": "database.filename",
+      "type": "java.lang.String",
+      "description": "SQLite database filename"
+    },
+    {
+      "name": "upload.root",
+      "type": "java.lang.String",
+      "description": "Root directory for uploaded files"
+    }
+  ] }

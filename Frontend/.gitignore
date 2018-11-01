@@ -1,0 +1,11 @@
+node_modules
+
+**/bin
+**/public
+.idea
+*.iml
+*.log
+
+
+build
+dist
