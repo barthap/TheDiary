@@ -80,7 +80,7 @@ module.exports = {
                 'NODE_ENV': JSON.stringify('production'),
             },
             'BASE_URL': JSON.stringify('/demos/TheDiary'),
-            'API_URL': JSON.stringify('http://localhost:8081')
+            'API_URL': JSON.stringify('https://hapex.com.pl/diary')
         }),
         new webpack.ProvidePlugin({$: 'jquery', jQuery: 'jquery'}),
         new UglifyJSPlugin({
