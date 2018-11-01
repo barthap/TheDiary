@@ -1,6 +1,5 @@
 import axios from 'axios';
 import {User} from "../helpers/user";
-import {API_URL} from "../consts";
 import {setApiAuthToken} from "../helpers/api";
 
 export function login(username: string, password: string): Promise<User> {

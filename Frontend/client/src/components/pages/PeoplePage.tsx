@@ -19,7 +19,7 @@ class PeoplePage extends React.Component<PeoplePageProps>{
     constructor(props: PeoplePageProps) {
         super(props);
 
-        if(props.peopleState.items.length === 0)
+        if(props.peopleState.items.Count() === 0)
             props.fetchPeople();
     }
 
@@ -35,7 +35,7 @@ class PeoplePage extends React.Component<PeoplePageProps>{
                 </Toolbar>
                 {isCrudPending && <h3>Updating...</h3>}
                 {fetching ? <h3>Loading...</h3> :
-                    <FilterablePersonList people={items}/>
+                    <FilterablePersonList people={items.Values()}/>
                 }
             </main>
         );

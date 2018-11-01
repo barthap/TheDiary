@@ -8,7 +8,6 @@ import {PhotoGallery} from "../ui/Gallery/PhotoGallery";
 import {Toolbar} from "../ui/Toolbar";
 import {Link, RouteComponentProps} from "react-router-dom";
 import {CreateButton} from "../ui/Button/CreateButton";
-import {API_URL} from "../../consts";
 import {Modal} from "../ui/Modal";
 import {FetchableImage} from "../util/FetchableImage";
 import * as ReactMarkdown from "react-markdown";

@@ -99,8 +99,8 @@ export class IndexedDictionary<T> implements IndexedCollection<T> {
             const key = array[i][indexKey];
             normalizedObject[key] = array[i];
         }
-        this.items = normalizedObject as { [key: string]: T }
-
+        this.items = normalizedObject as { [key: string]: T };
+        this.count = array.length;
     }
 
     public ContainsIndex(key: string): boolean {

@@ -1,6 +1,5 @@
 import { api } from "../helpers/api";
 import {IPhoto} from "../helpers/types";
-import {API_URL} from "../consts";
 import {createPageQueryString} from "../helpers/ResourceFilters";
 import {AxiosPromise} from "axios";
 import {IPageConfig} from "../helpers/pagination";

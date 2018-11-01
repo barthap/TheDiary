@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {IStory} from "../../../helpers/types";
-// @ts-ignore
-import RichTextEditor from 'react-rte';
+
+let RichTextEditor: any = null;
 
 export interface StoryFormProps {
     title: string;
@@ -20,19 +20,20 @@ type StoryFormState = {
 const initialState: StoryFormState = {
     header: '',
     rawDate: new Date(2011,6,1).toISOString(),
-    content: RichTextEditor.createEmptyValue()
+    content: null //RichTextEditor.createEmptyValue()
 };
 
 export class StoryForm extends React.Component<StoryFormProps, StoryFormState> {
 
     constructor(props: Readonly<StoryFormProps>) {
         super(props);
+        RichTextEditor = null;
 
         const {data} = props;
         this.state = data? {
             header: data.header,
             rawDate: new Date(data.happenedDate + 24*3600*1000).toISOString(),
-            content: RichTextEditor.createValueFromString(data.content, 'markdown')
+            content: null //RichTextEditor.createValueFromString(data.content, 'markdown')
         } : initialState;
 
         this.handleSave = this.handleSave.bind(this);
@@ -41,8 +42,21 @@ export class StoryForm extends React.Component<StoryFormProps, StoryFormState> {
         this.handleEditorChange = this.handleEditorChange.bind(this);
     }
 
+     componentDidMount() {
+        RichTextEditor = require('react-rte').default;
+        if(this.props.data)
+            this.setState({
+                content: RichTextEditor.createValueFromString(this.props.data.content, 'markdown')
+            });
+        else
+            this.setState({ content: RichTextEditor.createEmptyValue()});
+     }
+
     //TODO: Deprecated, check if needed
     UNSAFE_componentWillReceiveProps(nextProps: Readonly<StoryFormProps>, nextContext: any): void {
+        if(!RichTextEditor)
+            RichTextEditor = require('react-rte').default;
+
         const {data} = nextProps;
         if(data.id === this.props.data.id)
             return;
@@ -72,7 +86,9 @@ export class StoryForm extends React.Component<StoryFormProps, StoryFormState> {
                     </div>
                     <div className="form-group">
                         <label className="control-label">Story content</label>
-                        <RichTextEditor value={content} onChange={this.handleEditorChange}/>
+                        {RichTextEditor ?
+                            <RichTextEditor value={content} onChange={this.handleEditorChange}/>
+                            : <pre>Loading editor...</pre>}
                     </div>
                 </fieldset>
                 <button className="btn btn-primary btn-lg m" type="submit"
@@ -97,7 +113,8 @@ export class StoryForm extends React.Component<StoryFormProps, StoryFormState> {
     }
 
     private handleEditorChange(value: any) {
-        this.setState({content: value});
+        if(RichTextEditor)
+            this.setState({content: value});
     }
 
     private handleSave(event: React.MouseEvent<HTMLButtonElement>) {
@@ -108,7 +125,7 @@ export class StoryForm extends React.Component<StoryFormProps, StoryFormState> {
         const saved: IStory = {
             ...this.props.data,
             header,
-            content: content.toString('markdown'),
+            content: content ? content.toString('markdown') : '',
             happenedDate: date.getTime() + date.getTimezoneOffset()
         };
 

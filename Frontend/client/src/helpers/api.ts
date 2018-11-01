@@ -18,6 +18,9 @@ export function setApiAuthToken(token: string) {
 }
 
 export function checkForSavedUser(): User {
+    if(typeof localStorage === 'undefined' || !localStorage)
+        return null;
+
     const user: User = JSON.parse(localStorage.getItem('user'));
     if(user != null)
         setApiAuthToken(user.token);

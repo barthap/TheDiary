@@ -74,6 +74,10 @@ module.exports = {
         ],
     },
     plugins: [
+        new webpack.DefinePlugin({
+            'BASE_URL': JSON.stringify('/'),
+            'API_URL': JSON.stringify('http://localhost:8081')
+        }),
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NamedModulesPlugin(),
         new webpack.ProvidePlugin({ $: 'jquery', jQuery: 'jquery' }),

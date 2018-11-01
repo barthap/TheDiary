@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {IPerson} from "../../../helpers/types";
-// @ts-ignore
-import RichTextEditor from 'react-rte';
+
+let RichTextEditor: any = null;
 
 export interface PersonFormProps {
     title: string
@@ -18,7 +18,7 @@ type FormState = {
 
 const initialState: FormState = {
     fullName: '',
-    description: RichTextEditor.createEmptyValue(),
+    description: null, //RichTextEditor.createEmptyValue(),
     rawBirthDate: new Date(2000, 1, 1).toISOString()
 };
 
@@ -26,12 +26,13 @@ export class PersonForm extends React.Component<PersonFormProps, FormState> {
 
     public constructor(props: PersonFormProps) {
         super(props);
+        RichTextEditor = null;
 
         const {data} = props;
         this.state = data ? {
             fullName: data.fullName,
             rawBirthDate: new Date(data.birthDate + 24*3600*1000).toISOString(),
-            description: RichTextEditor.createValueFromString(data.description, 'markdown')
+            description: null //RichTextEditor.createValueFromString(data.description, 'markdown')
         } : initialState;
 
         this.handleSave = this.handleSave.bind(this);
@@ -40,12 +41,22 @@ export class PersonForm extends React.Component<PersonFormProps, FormState> {
         this.handleEditorChange = this.handleEditorChange.bind(this);
     }
 
+    public componentDidMount() {
+        RichTextEditor = require('react-rte').default;
+        if(this.props.data)
+            this.setState({
+                description: RichTextEditor.createValueFromString(this.props.data.description, 'markdown')
+            });
+        else
+            this.setState({ description: RichTextEditor.createEmptyValue()});
+    }
+
     public componentWillReceiveProps(newProps: PersonFormProps) {
         const {data} = newProps;
         this.setState( data ? {
             fullName: data.fullName,
             rawBirthDate: new Date(data.birthDate + new Date().getTimezoneOffset()).toISOString(),
-            description: RichTextEditor.createValueFromString(data.description, 'markdown')
+            description: RichTextEditor ? RichTextEditor.createValueFromString(data.description, 'markdown') : null
         } : initialState);
     }
 
@@ -64,7 +75,9 @@ export class PersonForm extends React.Component<PersonFormProps, FormState> {
                         <div className="form-group">
                             <label
                                    className="control-label">Description</label>
-                            <RichTextEditor value={description} onChange={this.handleEditorChange}/>
+                            {RichTextEditor ?
+                                <RichTextEditor value={description} onChange={this.handleEditorChange}/>
+                                : <pre>Loading editor...</pre>}
                         </div>
                         <div className="form-group">
                             <label htmlFor="birthDate" className="control-label">Birth date</label>

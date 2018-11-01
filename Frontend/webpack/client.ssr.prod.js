@@ -1,35 +1,36 @@
 const path = require('path');
 const webpack = require('webpack');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
-const nodeExternals = require('webpack-node-externals');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
-  context: path.join(__dirname, '../server'),
+  context: path.join(__dirname, '../client'),
   devtool: 'source-map',
-  entry: [
-
-    './routes/index.js',
-    ],
+  entry:  [
+      'jquery',
+      'bootstrap',
+      'bootstrap/dist/css/bootstrap.min.css',
+    './src/index.js',
+    './res/scss/main.scss'
+      ]
+  ,
   mode: 'production',
-  target: 'node',
   output: {
-    path: path.join(__dirname, '../server/bin'),
-    filename: './server.js',
+    path: path.join(__dirname, '../server/public'),
+    filename: './js/index.js',
+    publicPath: '/',
   },
     resolve: {
         extensions: ['.js', '.jsx', '.ts', '.tsx', '.json', '*']
     },
-  externals: [nodeExternals()],
   module: {
-    rules: [
-      {
+    rules: [{
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['es2015', 'stage-1'],
+            presets: ['react', 'es2015', 'stage-1'],
           },
         },
       },
@@ -42,25 +43,22 @@ module.exports = {
             test: /\.js$/,
             loader: "source-map-loader"
         },
-        {
-            test: /\.(css|scss)$/,
-            use: ExtractTextPlugin.extract({
-                fallback: 'style-loader',
-                use: ['css-loader?modules', 'sass-loader'],
-            }),
-        },
+      {
+        test: /\.(css|scss)$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: ['css-loader?modules', 'sass-loader'],
+        }),
+      },
         { test: /\.(woff|woff2|eot|ttf|svg)(\?|$)/, use: 'url-loader?limit=100000' },
       {
         test: /\.(png|jpg|gif)$/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              outputPath: 'images/',
-              emitFile: false,
-            }  
+        use: [{
+          loader: 'file-loader',
+          options: {
+            outputPath: 'images/',
           }
-        ]
+        }]
       },
     ],
   },
@@ -70,9 +68,11 @@ module.exports = {
         'NODE_ENV': JSON.stringify('production')
       }
     }),
+      new webpack.ProvidePlugin({ $: 'jquery', jQuery: 'jquery' }),
     new UglifyJSPlugin({
       sourceMap: true
     }),
-      new ExtractTextPlugin('css/main.css'),
-  ]
+    new ExtractTextPlugin('css/main.css'),
+
+  ],
 };

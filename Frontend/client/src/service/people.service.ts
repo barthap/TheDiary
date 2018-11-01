@@ -1,6 +1,5 @@
 import { api } from "../helpers/api";
 import {IPerson} from "../helpers/types";
-import {API_URL} from "../consts";
 import {createPageQueryString} from "../helpers/ResourceFilters";
 import {IPageConfig} from "../helpers/pagination";
 

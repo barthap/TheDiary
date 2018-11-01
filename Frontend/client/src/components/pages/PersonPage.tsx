@@ -12,6 +12,7 @@ import {personActions} from "../../actions/person.actions";
 import {Toolbar} from "../ui/Toolbar";
 import {EditButton} from "../ui/Button/EditButton";
 import {DeleteButton} from "../ui/Button/DeleteButton";
+import {PersonCollection} from "../../reducers/people.reducer";
 
 type PersonPageState = {
     person?: IPerson;    //IPerson object needed for this component only
@@ -24,7 +25,7 @@ type ReduxInjectedProps = {
     saveFetchedPerson: (payload: IPerson) => void;
     deletePerson: (id: number) => void;
     updatePerson: (payload: IPerson) => void;
-    loadedPeople: IPerson[];
+    loadedPeople: PersonCollection;
     isCrudPending: boolean;
 }
 type PersonPageProps = RouteComponentProps<{id: string}> & ReduxInjectedProps
@@ -102,7 +103,7 @@ class PersonPage extends React.Component<PersonPageProps, PersonPageState>{
         if(this.state.person && this.state.person.id === id)
             return;
 
-        const result = this.props.loadedPeople.find(e => e.id === id);
+        const result = this.props.loadedPeople.Get(this.props.match.params.id);
         if(result != null)
             this.setState({person: result});
         else

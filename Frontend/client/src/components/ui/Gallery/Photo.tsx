@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {IPhoto} from "../../../helpers/types";
-import {API_URL} from "../../../consts";
 import '../../../../res/scss/gallery.scss';
 import {FetchableImage} from "../../util/FetchableImage";
 

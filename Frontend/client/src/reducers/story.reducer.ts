@@ -1,9 +1,6 @@
 import {IStory} from "../helpers/types";
 import {storyConstants} from "../consts/story.constants";
-import {IFetchStoriesStatus} from "../actions/story.actions";
 import {Reducer} from "redux";
-import {normalizeArray} from "../helpers/utils";
-import {photoConstants} from "../consts/photo.constants";
 import {IndexedCollection, IndexedDictionary} from "../helpers/Dictionary";
 
 

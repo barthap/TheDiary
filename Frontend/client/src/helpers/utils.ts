@@ -32,6 +32,8 @@ export function displayDateTime(timestamp: number): string {
 }
 
 export function isUserLoggedIn(): boolean {
+    if(typeof localStorage === 'undefined' || !localStorage)
+        return false;
     return JSON.parse(localStorage.getItem('user')) != null;
 }
 

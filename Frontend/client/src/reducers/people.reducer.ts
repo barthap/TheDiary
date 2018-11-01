@@ -1,15 +1,18 @@
 import {IPerson} from "../helpers/types";
 import {Reducer} from "redux";
 import {personConstants} from "../consts/person.constants";
+import {IndexedCollection, IndexedDictionary} from "../helpers/Dictionary";
+
+export type PersonCollection = IndexedCollection<IPerson>;
 
 export interface IPeopleState {
-    items: IPerson[];
+    items: PersonCollection;
     fetching: boolean;
     isCrudPending: boolean;
 }
 
 const initialState: IPeopleState = {
-    items: [],
+    items: new IndexedDictionary<IPerson>('id'),
     fetching: false,
     isCrudPending: false
 };
@@ -21,17 +24,16 @@ const peopleReducer: Reducer<IPeopleState> = (state: IPeopleState = initialState
         case personConstants.FETCH_PEOPLE_FAILURE:
             return {...state, fetching: false};
         case personConstants.FETCH_PEOPLE_SUCCESS:
-            return {...state, fetching: false, items: action.payload};
+            return {...state, fetching: false,
+                items: new IndexedDictionary<IPerson>('id', action.payload)};
         case personConstants.ADD_PERSON_SUCCESS:
-            return {...state, items: state.items.concat(action.payload), isCrudPending: false};
         case personConstants.UPDATE_PERSON_SUCCESS:
             return {...state, isCrudPending: false,
-                items: state.items.filter(p=>p.id !== action.payload.id)
-                    .concat(action.payload)
+                items: state.items.Set(action.payload)
             };
         case personConstants.DELETE_PERSON_SUCCESS:
             return {...state, isCrudPending: false,
-                items: state.items.filter(p=>p.id !== action.payload)
+                items: state.items.Remove(action.payload)
             };
         case personConstants.UPDATE_PERSON_PENDING:
         case personConstants.ADD_PERSON_PENDING:
