@@ -3,10 +3,11 @@ import {Icon} from "../Icon";
 
 export interface ButtonProps {
     text: string;
-    onClick?: () => void;
+    onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
     type?: 'default' | 'primary' | 'danger' | 'warning' | 'success' | 'info' | 'link';
     icon?: string;
     size?: 'xs' | 'sm' | 'lg';
+    className?: string
 }
 
 export const Button: React.SFC<ButtonProps> = (props) => {
@@ -14,7 +15,7 @@ export const Button: React.SFC<ButtonProps> = (props) => {
     const iconStyle = (props.size === 'lg') ? {top: 3} : {top: 1};
     const icon = <Icon type={props.icon} style={iconStyle}/>;
     return (
-        <button className={`btn btn-${props.type} ${size}`} type="button"
+        <button className={`btn btn-${props.type} ${size} ${props.className}`} type="button"
                 onClick={props.onClick}>
             {props.icon && icon} {props.text}
         </button>

@@ -8,12 +8,8 @@ import {PhotoGallery} from "../ui/Gallery/PhotoGallery";
 import {Toolbar} from "../ui/Toolbar";
 import {Link, RouteComponentProps} from "react-router-dom";
 import {CreateButton} from "../ui/Button/CreateButton";
-import {Modal} from "../ui/Modal";
-import {FetchableImage} from "../util/FetchableImage";
-import * as ReactMarkdown from "react-markdown";
-import {EntityReferences} from "../ui/Reference/EntityReferences";
 import {IPhoto} from "../../helpers/types";
-import {AuditInfo} from "../ui/AuditInfo";
+import {PhotoPreview} from "../ui/Gallery/PhotoPreview";
 
 interface ReduxInjectedProps {
     photosState: IPhotosState;
@@ -54,8 +50,6 @@ class PhotosPage extends React.Component<PageProps, GalleryState> {
         }
     }
 
-
-
     render() {
         const {fetching, items} = this.props.photosState;
         return <main role="main">
@@ -80,18 +74,7 @@ class PhotosPage extends React.Component<PageProps, GalleryState> {
         const activePhoto: IPhoto = items.Get(clickedId.toString());
         if(activePhoto == null) return null;
 
-        return <Modal title={activePhoto.title}
-               show={showModal}
-               handleClose={this.handleModalClose}
-        >
-                <FetchableImage
-                    style={{maxWidth: '100%'}}
-                    src={`${API_URL}/photos/${activePhoto.id}`}
-                    alt={activePhoto.title}/>
-                <AuditInfo entity={activePhoto}/>
-                <ReactMarkdown source={activePhoto.description}/>
-                <EntityReferences entity={activePhoto}/>
-        </Modal>;
+        return <PhotoPreview activePhoto={activePhoto} show={showModal} handleModalClose={this.handleModalClose}/>
     }
 
     private handlePhotoClick(id: number) {
@@ -103,8 +86,6 @@ class PhotosPage extends React.Component<PageProps, GalleryState> {
     private handleModalClose() {
         this.setState({ showModal: false })
     }
-
-
 }
 
 const mapStateToProps = (state: IAppState) => ({
