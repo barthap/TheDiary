@@ -46,6 +46,7 @@ class PhotoDaoImpl(jdbcTemplate: JdbcTemplate,
 
         val sql = "update Photos SET Filename=:filename, Title=:title, Description=:description WHERE PhotoId=:id"
 
+        daoHelper.updateEntityBase(photo)
         namedJdbc.update(sql, getParams(photo))
     }
 

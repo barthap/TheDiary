@@ -58,6 +58,18 @@ public class DaoHelper {
         return new EntityBase(id.longValue(), now, now, null, null);
     }
 
+    public void updateEntityBase(EntityBase entity) {
+        final String sql = "UPDATE Items SET UpdatedDateTime=:updated WHERE ItemId=:id";
+
+        final DateTime now = DateTime.now();
+        final String currentDateTime = dateTimeToDbStr(now);
+
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("id", entity.getId());
+        params.addValue("updated", currentDateTime);
+
+        jdbcTemplate.update(sql, params);
+    }
 
     public void fillBaseEntity(EntityBase entity, ResultSet rs) throws SQLException {
         final long id = rs.getLong("Id");

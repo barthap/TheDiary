@@ -77,6 +77,7 @@ public class StoryDaoImpl extends AbstractJdbcDao<Story, Long> implements StoryD
                         Utils.dateTimeToDbStr(story.getHappenedDate().toDateTimeAtStartOfDay(), true))
                 .addValue("content", story.getContent());
 
+        getDaoHelper().updateEntityBase(story);
         getNamedJdbc().update(query, params);
     }
 }

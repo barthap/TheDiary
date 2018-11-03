@@ -66,6 +66,7 @@ public class PeopleDaoImpl extends AbstractJdbcDao<Person, Long> implements Peop
         final String query
                 = "update People SET FullName=:name, BirthDate=:birthDate, Description=:description WHERE PersonId=:id";
 
+        getDaoHelper().updateEntityBase(person);
         executeSave(query, person);
     }
 
