@@ -9,20 +9,22 @@ export interface IPeopleState {
     items: PersonCollection;
     fetching: boolean;
     isCrudPending: boolean;
+    error: boolean;
 }
 
 const initialState: IPeopleState = {
     items: new IndexedDictionary<IPerson>('id'),
     fetching: false,
-    isCrudPending: false
+    isCrudPending: false,
+    error: false
 };
 
 const peopleReducer: Reducer<IPeopleState> = (state: IPeopleState = initialState, action) => {
     switch (action.type) {
         case personConstants.FETCH_PEOPLE_PENDING:
-            return {...state, fetching: true};
+            return {...state, fetching: true, error: false};
         case personConstants.FETCH_PEOPLE_FAILURE:
-            return {...state, fetching: false};
+            return {...state, fetching: false, error: true};
         case personConstants.FETCH_PEOPLE_SUCCESS:
             return {...state, fetching: false,
                 items: new IndexedDictionary<IPerson>('id', action.payload)};

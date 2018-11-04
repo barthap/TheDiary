@@ -57,7 +57,7 @@ export class StoryForm extends React.Component<StoryFormProps, StoryFormState> {
 
     render() {
         const { header, rawDate } = this.state;
-        const { content } = this.props.data;
+        const content = this.props.data && this.props.data.content;
 
         return <div className={"col-lg-8 " + this.props.className}>
             <Form title={this.props.title} onSaveClick={this.handleSave} onCancelClick={this.handleCancel}>

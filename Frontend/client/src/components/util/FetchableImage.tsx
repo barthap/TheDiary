@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {api} from "../../helpers/api";
+import {GridLoader} from "react-spinners";
 
 
 //HTMLImgAttributes
@@ -34,7 +35,9 @@ export class FetchableImage extends React.Component<Props, State> {
         const {dataUrl, fetching, error} = this.state;
 
         if(fetching)
-            return <h3>...</h3>;
+            return <div className="spinner-container">
+                <GridLoader size={20} color="#00C1FF" />;
+            </div>;
         if(error)
             return <h5>Error loading image</h5>;
 
@@ -64,8 +67,7 @@ export class FetchableImage extends React.Component<Props, State> {
         api.get(src, {
             responseType: 'blob',
             timeout: 30000  //30s
-        })
-            .then(res => res.data)
+        }).then(res => res.data)
             .then(data => {
                 if(prevData)
                     URL.revokeObjectURL(prevData);

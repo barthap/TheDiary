@@ -8,6 +8,7 @@ import {SingleStory} from "../ui/Story/SingleStory";
 import {IStory} from "../../helpers/types";
 import {StoryForm} from "../ui/Story/StoryForm";
 import {CreateButton} from "../ui/Button/CreateButton";
+import {PropagateLoader, SyncLoader} from "react-spinners";
 
 type StoryPageProps = {
     storyState: IStoryState;
@@ -51,21 +52,28 @@ class StoryPage extends React.Component<StoryPageProps, State> {
             <main role="main" className="container-fluid">
                 <h1> Stories</h1>
                 {this.renderCreator()}
-                {fetching ? <h4>Loading...</h4> :
+                {fetching ? <div>
+                        <h3>Loading...</h3>
+                        <div style={{marginLeft: '3em'}}>
+                            <PropagateLoader color="#00C1FF"/>
+                        </div>
+                    </div> :
                 stories.map(s =>
                     <div key={s.id}>
                         <SingleStory onSave={updateStory} onDelete={deleteStory} story={s}/>
                         <hr/>
                     </div>
                 )}
-                {!fetching && stories.length === 0 && <p>No stories yet!</p>}
+                {!fetching && stories.length === 0 && !storyState.error && <p>No stories yet!</p>}
             </main>
         );
     }
 
     private renderCreator() {
         if(this.props.storyState.isCrudPending)
-            return <h4>Updating...</h4>;
+            return <div style={{margin: 15}}>
+                <SyncLoader color="#00C1FF" size={8}/>
+            </div>;
         if(!this.state.isCreating)
             return <CreateButton onClick={this.handleCreate}/>;
 

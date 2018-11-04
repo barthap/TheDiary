@@ -10,12 +10,14 @@ export interface IStoryState {
     items: StoryItems;
     fetching: boolean;
     isCrudPending: boolean;
+    error: boolean;
 }
 
 const initialState: IStoryState = {
     items: new IndexedDictionary<IStory>('id'),
     fetching: false,
-    isCrudPending: false
+    isCrudPending: false,
+    error: false
 };
 
 const storyReducer: Reducer<IStoryState> = (state: IStoryState = initialState, action) => {
@@ -23,9 +25,9 @@ const storyReducer: Reducer<IStoryState> = (state: IStoryState = initialState, a
     switch (action.type) {
         //FETCH
         case storyConstants.FETCH_STORIES_PENDING:
-            return {...state, fetching: true};
+            return {...state, fetching: true, error: false};
         case storyConstants.FETCH_STORIES_FAILURE:
-            return {...state, fetching: false};
+            return {...state, fetching: false, error: true};
         case storyConstants.FETCH_STORIES_SUCCESS:
             return {...state, fetching: false,
                 items: new IndexedDictionary<IStory>('id', payload)

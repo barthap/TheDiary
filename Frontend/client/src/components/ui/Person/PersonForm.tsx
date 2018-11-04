@@ -51,10 +51,11 @@ export class PersonForm extends React.Component<PersonFormProps, FormState> {
 
     public render() {
         const {fullName, rawBirthDate} = this.state;
+        const description = this.props.data && this.props.data.description;
         return (
             <Form title={this.props.title} onSaveClick={this.handleSave} onCancelClick={this.handleCancel}>
                 <TextInput name="fullName" label="Full name" value={fullName} onChange={this.handleChange}/>
-                <RichTextInput label="Description" initialValue={this.props.data.description} ref={this.editorRef}/>
+                <RichTextInput label="Description" initialValue={description} ref={this.editorRef}/>
                 <DateInput name="birthDate" label="Birth date" value={rawBirthDate} onChange={this.handleChange}/>
             </Form>
         );

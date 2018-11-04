@@ -13,6 +13,7 @@ import {Toolbar} from "../ui/Toolbar";
 import {EditButton} from "../ui/Button/EditButton";
 import {DeleteButton} from "../ui/Button/DeleteButton";
 import {PersonCollection} from "../../reducers/people.reducer";
+import {PropagateLoader} from "react-spinners";
 
 type PersonPageState = {
     person?: IPerson;    //IPerson object needed for this component only
@@ -28,7 +29,7 @@ type ReduxInjectedProps = {
     loadedPeople: PersonCollection;
     isCrudPending: boolean;
 }
-type PersonPageProps = RouteComponentProps<{id: string}> & ReduxInjectedProps
+type PersonPageProps = RouteComponentProps<{id: string}> & ReduxInjectedProps;
 class PersonPage extends React.Component<PersonPageProps, PersonPageState>{
 
     constructor(props: PersonPageProps) {
@@ -59,7 +60,12 @@ class PersonPage extends React.Component<PersonPageProps, PersonPageState>{
         const { person, isFetching, isEditing } = this.state;
 
         if(isFetching)
-            return <h2>Loading...</h2>;
+            return <div>
+                <h2>Loading...</h2>
+                <div style={{marginLeft: '4em'}}>
+                    <PropagateLoader color="#00C1FF"/>
+                </div>
+            </div>;
         else if(!person)
             return <h1>An error occurred</h1>;
 

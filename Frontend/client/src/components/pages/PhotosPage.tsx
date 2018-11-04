@@ -10,6 +10,7 @@ import {Link, RouteComponentProps} from "react-router-dom";
 import {CreateButton} from "../ui/Button/CreateButton";
 import {IPhoto} from "../../helpers/types";
 import {PhotoPreview} from "../ui/Gallery/PhotoPreview";
+import {PropagateLoader} from "react-spinners";
 
 interface ReduxInjectedProps {
     photosState: IPhotosState;
@@ -59,7 +60,12 @@ class PhotosPage extends React.Component<PageProps, GalleryState> {
                     <CreateButton text="Add photo"/>
                 </Link>
             </Toolbar>
-            {fetching && <h3>Loading...</h3>}
+            {fetching && <div>
+                <h3>Loading...</h3>
+                <div style={{marginLeft: '3em'}}>
+                    <PropagateLoader color="#00C1FF"/>
+                </div>
+            </div>}
             {!fetching && <PhotoGallery photos={items.Values()} onPhotoClick={this.handlePhotoClick}/>}
             {this.renderDetails()}
         </main>;

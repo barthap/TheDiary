@@ -41,7 +41,7 @@ const watchAddStory = function* () {
             yield put(storyActions.addStorySuccess(result));
             yield put(alertActions.success("Added story"));
         } catch (e) {
-            console.warn("Add person error", e);
+            console.warn("Add story error", e);
             yield put(storyActions.addStoryFailure());
             yield put(alertActions.error("Adding story failed"));
         }
